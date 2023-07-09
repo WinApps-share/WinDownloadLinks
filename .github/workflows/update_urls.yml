@@ -13,9 +13,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up PowerShell
-      uses: microsoft/powershell@v1
-
     - name: Download Fido.ps1
       run: |
         Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pbatard/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
