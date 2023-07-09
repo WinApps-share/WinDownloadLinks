@@ -7,29 +7,27 @@ on:
 
 jobs:
   update_urls:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up PowerShell
+      uses: microsoft/powershell@v1
+
     - name: Download Fido.ps1
       run: |
-        wget https://raw.githubusercontent.com/pbatard/Fido/master/Fido.ps1
-
-    - name: Set up PowerShell
-      run: |
-        sudo apt-get install -y powershell
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pbatard/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
 
     - name: Execute Fido and save URLs
-      shell: pwsh
       run: |
         $urls = @{}
         $win11url = .\Fido.ps1 -win 11 -geturl
         $win10url = .\Fido.ps1 -win 10 -geturl
         $urls.Add("Win11", $win11url)
         $urls.Add("Win10", $win10url)
-        $urls | ConvertTo-Json | Out-File -FilePath urls.json -Encoding utf8
+        $urls | ConvertTo-Json | Out-File -FilePath 'urls.json' -Encoding utf8
 
     - name: Commit and push changes
       run: |
