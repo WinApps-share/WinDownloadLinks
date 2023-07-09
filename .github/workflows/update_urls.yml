@@ -14,7 +14,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up PowerShell
-      uses: microsoft/powershell-setup@v1
+      uses: actions/setup-powershell@v2
+      with:
+        powershell-version: 'latest'  # 或者指定特定的 PowerShell 版本
 
     - name: Download Fido.ps1
       run: |
