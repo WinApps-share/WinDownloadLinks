@@ -13,6 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Download Fido.ps1
+      run: |
+        wget https://raw.githubusercontent.com/pbatard/Fido/master/Fido.ps1
+
     - name: Set up PowerShell
       run: |
         sudo apt-get install -y powershell
