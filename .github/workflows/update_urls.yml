@@ -1,6 +1,7 @@
 name: Update URLs
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 */24 * * *'  # 每 24 小时执行一次，你可以根据需要修改时间
 
