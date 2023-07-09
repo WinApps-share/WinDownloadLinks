@@ -1,0 +1,37 @@
+name: Update URLs
+
+on:
+  schedule:
+    - cron: '0 */24 * * *'  # 每 24 小时执行一次，你可以根据需要修改时间
+
+jobs:
+  update_urls:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up PowerShell
+      uses: microsoft/powershell-setup@v1
+
+    - name: Download Fido.ps1
+      run: |
+        wget https://raw.githubusercontent.com/pbatard/Fido/master/Fido.ps1
+
+    - name: Execute Fido and save URLs
+      run: |
+        $urls = @{}
+        $win11url = pwsh -Command ".\Fido.ps1 -win 11 -geturl"
+        $win10url = pwsh -Command ".\Fido.ps1 -win 10 -geturl"
+        $urls.Add("Win11", $win11url)
+        $urls.Add("Win10", $win10url)
+        $urls | ConvertTo-Json | Out-File -FilePath urls.json -Encoding utf8
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add Fido.ps1 urls.json
+        git commit -m "Update URLs"
+        git push
