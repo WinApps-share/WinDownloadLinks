@@ -20,10 +20,10 @@ jobs:
     - name: Execute Fido and save URLs
       run: |
         $urls = @{}
-        $win11url = .\Fido.ps1 -win 11 -geturl
-        $win10url = .\Fido.ps1 -win 10 -geturl
-        $urls.Add("Win11", $win11url)
-        $urls.Add("Win10", $win10url)
+        $win11_pro_x64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -Lang Chinese (Simplified) -Arch x64 -geturl
+        $win10_pro_x64_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -Lang Chinese (Simplified) -Arch x64 -geturl
+        $urls.Add("Win11", $win11_pro_x64_url)
+        $urls.Add("Win10", $win10_pro_x64_url)
         $urls | ConvertTo-Json | Out-File -FilePath 'urls.json' -Encoding utf8
 
     - name: Commit and push changes
