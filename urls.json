@@ -1,4 +1,4 @@
 {
-  "Win11": "https://software.download.prss.microsoft.com/dbazure/Win11_22H2_Chinese_Simplified_x64v2.iso?t=e4ceaa0d-e03a-48a2-b436-5b42a546f8b2&e=1696162524&h=ecef8817b8708bea3d15df58be6b4e5b693d20289d738bb9f54907cc00d3175b",
-  "Win10": "https://software.download.prss.microsoft.com/dbazure/Win10_22H2_Chinese_Simplified_x64v1.iso?t=c091bda3-033a-4b28-9388-ccc4e98f0a60&e=1696162527&h=107cafd26b023210e9f06f6a1fb54f0da708dc4f85e8f3407c5c5a4698370041"
+  "Win10": "https://software.download.prss.microsoft.com/dbazure/Win10_22H2_Chinese_Simplified_x64v1.iso?t=5bc55a77-fb40-4a2f-a793-fb18c593938a&e=1696207717&h=fc2040e918fc5c3d2f8a9342fc008821f0057d43cfccc48f75de2be536f571de",
+  "Win11": "https://software.download.prss.microsoft.com/dbazure/Win11_22H2_Chinese_Simplified_x64v2.iso?t=6701d0ba-9180-4a3e-beb3-0c9106959b6f&e=1696207714&h=a3a407e2f3d3f4d7c2f080241da6cc8bd5f6466a3ca85bc6461daa4cbbdc40d3"
 }
