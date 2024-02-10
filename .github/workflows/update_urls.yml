@@ -20,8 +20,8 @@ jobs:
     - name: Execute Fido and save URLs
       run: |
         $urls = @{}
-        $win11_pro_x64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -Lang simplified -Arch x64 -geturl
-        $win10_pro_x64_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -Lang simplified -Arch x64 -geturl
+        $win11_pro_x64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -Lang simp -Arch x64 -geturl
+        $win10_pro_x64_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -Lang simp -Arch x64 -geturl
         $urls.Add("Win11", $win11_pro_x64_url)
         $urls.Add("Win10", $win10_pro_x64_url)
         $urls | ConvertTo-Json | Out-File -FilePath 'urls.json' -Encoding utf8
