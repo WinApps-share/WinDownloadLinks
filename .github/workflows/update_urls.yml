@@ -15,13 +15,13 @@ jobs:
 
     - name: Download Fido.ps1
       run: |
-        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pbatard/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pbatard/Fido/d43d7aeee3b4d6dcb2330233ba0ee5714a2dff5d/Fido.ps1' -OutFile 'Fido.ps1'
 
     - name: Execute Fido and save URLs
       run: |
         $urls = @{}
-        $win11_pro_x64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -Arch x64 -geturl
-        $win10_pro_x64_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -Arch x64 -geturl
+        $win11_pro_x64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x64 -geturl
+        $win10_pro_x64_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x64 -geturl
         $urls.Add("Win11", $win11_pro_x64_url)
         $urls.Add("Win10", $win10_pro_x64_url)
         $urls | ConvertTo-Json | Out-File -FilePath 'urls.json' -Encoding utf8
