@@ -15,7 +15,7 @@ jobs:
 
     - name: Download Fido.ps1
       run: |
-        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/pbatard/Fido/d43d7aeee3b4d6dcb2330233ba0ee5714a2dff5d/Fido.ps1' -OutFile 'Fido.ps1'
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/007ayong/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
 
     - name: Execute Fido and save URLs
       run: |
