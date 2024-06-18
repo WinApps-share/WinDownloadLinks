@@ -2,7 +2,7 @@ name: Update URLs
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # 每 12 小时执行一次，你可以根据需要修改时间
+    - cron: '0 */3 * * *'  # 每 3 小时执行一次，你可以根据需要修改时间
   workflow_dispatch:
 
 jobs:
