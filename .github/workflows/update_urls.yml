@@ -21,9 +21,13 @@ jobs:
       run: |
         $urls = @{}
         $win11_pro_x64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x64 -geturl
+        $win11_pro_arm64_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch ARM64 -geturl
         $win10_pro_x64_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x64 -geturl
-        $urls.Add("Win11", $win11_pro_x64_url)
-        $urls.Add("Win10", $win10_pro_x64_url)
+        $win10_pro_x86_url = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x86 -geturl
+        $urls.Add("Win11_x64", $win11_pro_x64_url)
+        $urls.Add("Win11_arm64", $win11_pro_arm64_url)
+        $urls.Add("Win10_x64", $win10_pro_x64_url)
+        $urls.Add("Win10_x86", $win10_pro_x86_url)
         $urls | ConvertTo-Json | Out-File -FilePath 'urls.json' -Encoding utf8
 
     - name: Commit and push changes
