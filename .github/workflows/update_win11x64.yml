@@ -1,4 +1,4 @@
-name: Update URLs
+name: Update Win11x64
 
 on:
   schedule:
@@ -29,5 +29,5 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add urls.json
-        git commit -m "Update URLs"
+        git commit -m "Update Win11x64 URL"
         git push

@@ -1,0 +1,33 @@
+name: Update Win11Arm64
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # 每 3 小时执行一次，你可以根据需要修改时间
+  workflow_dispatch:
+
+jobs:
+  update_urls:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download Fido.ps1
+      run: |
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/007ayong/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
+
+    - name: Execute Fido and save URLs
+      run: |
+        $urls = @{}
+        $win11_pro_arm_url = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch ARM -geturl
+        $urls.Add("Win11_ARM", $win11_pro_arm_url)
+        $urls | ConvertTo-Json | Out-File -FilePath 'urls2.json' -Encoding utf8
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add urls2.json
+        git commit -m "Update Win11 ARM URL"
+        git push
