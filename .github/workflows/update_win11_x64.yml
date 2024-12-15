@@ -1,0 +1,50 @@
+name: Update Win11_x64
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # 每 3 小时执行一次，你可以根据需要修改时间
+  workflow_dispatch:
+
+jobs:
+  update_urls:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download Fido.ps1
+      run: |
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/007ayong/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
+
+    - name: Generate new URLs for Win11_x64
+      run: |
+        $newField = @{
+          "Win11_x64" = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x64 -geturl
+        }
+        $newField | ConvertTo-Json -Depth 10 | Out-File -FilePath 'new_field.json' -Encoding utf8
+
+    - name: Pull latest changes and merge fields
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git pull --rebase
+
+        # 合并现有 urls.json 和新生成的字段
+        if (Test-Path 'urls.json') {
+          $existingData = Get-Content 'urls.json' | ConvertFrom-Json
+        } else {
+          $existingData = @{}
+        }
+        $newData = Get-Content 'new_field.json' | ConvertFrom-Json
+        foreach ($key in $newData.Keys) {
+          $existingData[$key] = $newData[$key]
+        }
+        $existingData | ConvertTo-Json -Depth 10 | Out-File -FilePath 'urls.json' -Encoding utf8
+
+    - name: Commit and push changes
+      run: |
+        git add urls.json
+        git commit -m "Update Win11_x64 URL"
+        git push
+        
