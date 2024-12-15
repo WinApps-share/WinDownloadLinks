@@ -1,0 +1,24 @@
+name: Update Win10_x86
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # 每 3 小时执行一次，你可以根据需要修改时间
+  workflow_dispatch:
+
+jobs:
+  update_urls:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Download Fido.ps1
+      run: |
+        Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/007ayong/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
+
+    - name: Update Win10 x86 URL
+      run: |
+        pwsh -Command "& {
+            ./update-win10-x86.ps1
+        }"
