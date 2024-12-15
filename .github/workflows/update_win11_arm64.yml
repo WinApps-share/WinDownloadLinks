@@ -17,42 +17,8 @@ jobs:
       run: |
         Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/007ayong/Fido/master/Fido.ps1' -OutFile 'Fido.ps1'
 
-    - name: Generate new URLs for Win11_arm64
+    - name: Update Win11 arm64 URL
       run: |
-        $newField = @{
-          "Win11_arm64" = .\Fido.ps1 -win 11 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch ARM -geturl
-        }
-        $newField | ConvertTo-Json -Depth 10 | Out-File -FilePath 'new_field.json' -Encoding utf8
-
-    - name: Pull latest changes and merge fields
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-
-        # 拉取最新内容
-        echo "Pulling latest changes..."
-        git pull --rebase || exit 1
-
-        # 检查并合并 JSON 文件
-        echo "Merging JSON fields..."
-        if (Test-Path 'urls.json') {
-          $existingData = Get-Content 'urls.json' | ConvertFrom-Json
-        } else {
-          $existingData = @{}
-        }
-
-        $newData = Get-Content 'new_field.json' | ConvertFrom-Json
-        foreach ($key in $newData.Keys) {
-          $existingData[$key] = $newData[$key]
-        }
-
-        $existingData | ConvertTo-Json -Depth 10 | Out-File -FilePath 'urls.json' -Encoding utf8
-        echo "Merged JSON:"
-        Get-Content 'urls.json'
-
-    - name: Commit and push changes
-      run: |
-        git add urls.json
-        git commit -m "Update Win11 arm64 URL" || echo "No changes to commit."
-        git push || (echo "Push failed, retrying..." && git pull --rebase && git push)
-        
+        pwsh -Command "& {
+            ./update-win11-arm64.ps1
+        }"
