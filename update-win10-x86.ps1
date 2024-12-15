@@ -18,8 +18,8 @@ if (Test-Path 'urls.json') {
 
 # 执行 Fido.ps1 获取 URL，并更新对应键
 try {
-    $newUrl = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x64 -geturl
-    $urls.win10_x64 = $newUrl
+    $newUrl = .\Fido.ps1 -win 10 -Rel Latest -Ed Pro -locale zh-CN -lang simp -Arch x86 -geturl
+    $urls.win10_x86 = $newUrl
 } catch {
     echo "Error generating URL. Exiting."
     exit 1
@@ -34,5 +34,5 @@ Get-Content 'urls.json'
 git config --local user.email "action@github.com"
 git config --local user.name "GitHub Action"
 git add urls.json
-git commit -m "Updated Win10_x64 URL"
+git commit -m "Updated Win10_x86 URL"
 git push || (echo "Push failed. Retrying..." && git pull --rebase && git push)
