@@ -28,23 +28,31 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git pull --rebase
 
-        # 合并现有 urls.json 和新生成的字段
+        # 拉取最新内容
+        echo "Pulling latest changes..."
+        git pull --rebase || exit 1
+
+        # 检查并合并 JSON 文件
+        echo "Merging JSON fields..."
         if (Test-Path 'urls.json') {
           $existingData = Get-Content 'urls.json' | ConvertFrom-Json
         } else {
           $existingData = @{}
         }
+
         $newData = Get-Content 'new_field.json' | ConvertFrom-Json
         foreach ($key in $newData.Keys) {
           $existingData[$key] = $newData[$key]
         }
+
         $existingData | ConvertTo-Json -Depth 10 | Out-File -FilePath 'urls.json' -Encoding utf8
+        echo "Merged JSON:"
+        Get-Content 'urls.json'
 
     - name: Commit and push changes
       run: |
         git add urls.json
-        git commit -m "Update Win11_x64 URL"
-        git push
+        git commit -m "Update Win11 x64 URL" || echo "No changes to commit."
+        git push || (echo "Push failed, retrying..." && git pull --rebase && git push)
         
