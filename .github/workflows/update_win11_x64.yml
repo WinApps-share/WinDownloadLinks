@@ -2,7 +2,7 @@ name: Update Win11_x64
 
 on:
   schedule:
-    - cron: '0 */3 * * *'  # 每 3 小时执行一次，你可以根据需要修改时间
+    - cron: '0 */20 * * *'  # 每 3 小时执行一次，你可以根据需要修改时间
   workflow_dispatch:
 
 jobs:
